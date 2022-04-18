@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="zh-CN">
   <head>
     <!--hey！来看源代码啦！-->
