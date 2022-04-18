@@ -10,7 +10,7 @@
 	  <p>2,如网站显示不出来，请等待，或者和我反馈，QQ：2437203651。</p>
 	  <p>3,遇到BUG请及时反馈！</p>
     <p>感谢来到此网站</p>
-    <img src="jinb.png" alt="cat">
+    <img src="jinb.png" alt="cats">
     <h1 style = "background:yellow;">游戏下载</h1>
     <a href="https://wws.lanzoub.com/if9a80279zyd">i wanna the fish</a>
     <p></p>
