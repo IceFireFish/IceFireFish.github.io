@@ -15,6 +15,8 @@
     <a href="https://wws.lanzoub.com/if9a80279zyd">i wanna the fish</a>
     <p></p>
     <a href="https://wws.lanzoub.com/iFe8e01hvt1a">植物大战僵尸fish版</a>
+    <p></p>
+    <a href="https://wws.lanzoub.com/iJIIk06iqppg">fish小鱼专用软件</a>
     <h1 style = "background:red;">拜访作者：</h1>
     <a href="https://space.bilibili.com/1660860592">GO！</a>
     <h1 style = "background:orange;">好康的：</h1>
