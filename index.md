@@ -18,7 +18,7 @@
     <p></p>
     <a href="https://wws.lanzoub.com/iJIIk06iqppg">fish小鱼专用软件</a>
     <p></p>
-    <a href="https://wws.lanzoub.com/iTF930808efg">元气鱼士</a>
+    <a href="https://wws.lanzoub.com/iHwi2083w0qf">元气鱼士</a>
     <h1 style = "background:red;">拜访作者：</h1>
     <a href="https://space.bilibili.com/1660860592">GO！</a>
     <h1 style = "background:orange;">好康的：</h1>
