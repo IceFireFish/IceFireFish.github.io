@@ -25,8 +25,6 @@
     <a href="https://wws.lanzoub.com/iHwi2083w0qf">元气鱼士</a>
     <h1 style = "background:red;">拜访作者：</h1>
     <a href="https://space.bilibili.com/1660860592">GO！</a>
-    <h1 style = "background:orange;">好康的：</h1>
-    <a href="https://www.bilibili.com/video/BV1GJ411x7h7">里面有你哦</a>
     <p style="    text-align: center;
         margin: auto;
         padding: 20px;
