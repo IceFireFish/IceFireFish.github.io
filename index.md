@@ -18,7 +18,7 @@
     <p>--------</p>
     <a href="https://wws.lanzoub.com/iFe8e01hvt1a">植物大战僵尸fish版</a>
     <p>--------</p>
-    <a href="https://wws.lanzoub.com/iJIIk06iqppg">fish小鱼专用软件</a>
+    <a href="https://wws.lanzoub.com/iv9pX0cglerg">fish小鱼专用软件1.8</a>
     <p>--------</p>
     <a href="https://wws.lanzoub.com/i38HB08450le">叼毛大冒险</a>
     <p>--------</p>
@@ -41,7 +41,7 @@
     <p style="    text-align: center;
     margin: auto;
     padding: 20px;
-    border: 2px;">此为1.0版本</p>
+    border: 2px;">此为2.0版本</p>
   </body>
 </html>
 
