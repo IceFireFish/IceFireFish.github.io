@@ -24,6 +24,8 @@
     <p>--------</p>
     <a href="https://wwqi.lanzoub.com/b0327igcj">病毒————密码:4uvv</a>
     <p>--------</p>
+    <a href="https://wwqi.lanzoub.com/b032afech">软件,密码:84kn</a>
+    <p>--------</p>
     <a href="https://wwqi.lanzoub.com/i5tKN0r4602f">666</a>
     <p>--------</p>
     <a href="https://wws.lanzoub.com/i38HB08450le">叼毛大冒险</a>
@@ -31,17 +33,12 @@
     <a href="https://wws.lanzoub.com/iHwi2083w0qf">元气鱼士</a>
     <h1 style = "background:red;">拜访作者：</h1>
     <a href="https://space.bilibili.com/1660860592">GO！</a>
+    <h1 style = "background:green;">极域TIP：万能密码：mythware_super_password</h1>
     <p style="    text-align: center;
         margin: auto;
         padding: 20px;
         border: 2px;
         background-image: linear-gradient(#e66465, #9198e5);" ><b>公告</b>
-        <br><b>游戏我自己做的，不喜勿喷</b>
-        <br>The game I made myself, don't like it or spray it
-        <br><b>我不是职业程序员</b>
-        <br>I'm not a professional programmer
-        <br> 
-        <br>电话号码(number):13861156252
         <br>QQ：2437203651
     </p>
     <p style="    text-align: center;
