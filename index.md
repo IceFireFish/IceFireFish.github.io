@@ -12,6 +12,9 @@
     <p>感谢来到此网站</p>
     <img src="jinb.png" alt="cats">
     <h1 style = "background:yellow;">游戏下载</h1>
+    <a href="https://wwqi.lanzoub.com/b032gul7a">元气鱼士(new)!!!</a>
+    <p>密码：aq3a</p>
+    <p>--------</p>
     <a href="https://wws.lanzoub.com/if9a80279zyd">i wanna the fish</a>
     <p>--------</p>
     <a href="https://wws.lanzoub.com/iyJ080844rti">i wanna be the mouse</a>
@@ -30,7 +33,7 @@
     <p>--------</p>
     <a href="https://wws.lanzoub.com/i38HB08450le">叼毛大冒险</a>
     <p>--------</p>
-    <a href="https://wws.lanzoub.com/iHwi2083w0qf">元气鱼士</a>
+    <a href="https://wwqi.lanzoub.com/igawp0zrgtcf">粽子矿工</a>
     <h1 style = "background:red;">拜访作者：</h1>
     <a href="https://space.bilibili.com/1660860592">GO！</a>
     <h1 style = "background:green;">极域TIP：万能密码：mythware_super_password</h1>
