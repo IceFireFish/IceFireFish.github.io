@@ -13,7 +13,11 @@
     <img src="jinb.png" alt="cats">
     <h1 style = "background:yellow;">游戏下载</h1>
     <a href="https://wwqi.lanzoub.com/b032gul7a">元气鱼士(new)!!!</a>
-    <p>密码：aq3a</p>
+    <p>密码：aq3a</p><!--https://wwqi.lanzoub.com/b032ptlwd
+密码:3ree!-->
+    <p>--------</p>
+    <a href="https://wwqi.lanzoub.com/b032ptlwd">Kun&Egg</a>
+    <p>密码:3ree</p>
     <p>--------</p>
     <a href="https://wws.lanzoub.com/if9a80279zyd">i wanna the fish</a>
     <p>--------</p>
@@ -42,12 +46,12 @@
         padding: 20px;
         border: 2px;
         background-image: linear-gradient(#e66465, #9198e5);" ><b>公告</b>
-        <br>QQ：2437203651
+        <br>QQ：xxxxxxxxxx
     </p>
     <p style="    text-align: center;
     margin: auto;
     padding: 20px;
-    border: 2px;">此为2.0版本</p>
+    border: 2px;">此为3.0版本</p>
   </body>
 </html>
 
