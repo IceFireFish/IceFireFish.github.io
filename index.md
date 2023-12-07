@@ -40,6 +40,7 @@
     <a href="https://wwqi.lanzoub.com/igawp0zrgtcf">粽子矿工</a>
     <h1 style = "background:red;">拜访作者：</h1>
     <a href="https://space.bilibili.com/1660860592">GO！</a>
+    <a href="1.html">Test！</a>
     <h1 style = "background:green;">极域TIP：万能密码：mythware_super_password</h1>
     <p style="    text-align: center;
         margin: auto;
