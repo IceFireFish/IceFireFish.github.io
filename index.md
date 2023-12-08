@@ -12,32 +12,7 @@
     <p>感谢来到此网站</p>
     <img src="jinb.png" alt="cats">
     <h1 style = "background:yellow;">游戏下载</h1>
-    <a href="https://wwqi.lanzoub.com/b032gul7a">元气鱼士(new)!!!</a>
-    <p>密码：aq3a</p><!--https://wwqi.lanzoub.com/b032ptlwd
-密码:3ree!-->
-    <p>--------</p>
-    <a href="https://wwqi.lanzoub.com/b032ptlwd">Kun&Egg</a>
-    <p>密码:3ree</p>
-    <p>--------</p>
-    <a href="https://wws.lanzoub.com/if9a80279zyd">i wanna the fish</a>
-    <p>--------</p>
-    <a href="https://wws.lanzoub.com/iyJ080844rti">i wanna be the mouse</a>
-    <p>--------</p>
-    <a href="https://wws.lanzoub.com/iFe8e01hvt1a">植物大战僵尸fish版(改</a>
-    <p>--------</p>
-    <a href="https://wwqi.lanzoub.com/b031yjqhg">pvz_fish,密码:69v1</a>
-    <p>--------</p>
-    <a href="https://wwl.lanzoub.com/ioVgy0h2jwqh">fish小鱼专用软件1.9114</a>
-    <p>--------</p>
-    <a href="https://wwqi.lanzoub.com/b0327igcj">病毒————密码:4uvv</a>
-    <p>--------</p>
-    <a href="https://wwqi.lanzoub.com/b032afech">软件,密码:84kn</a>
-    <p>--------</p>
-    <a href="https://wwqi.lanzoub.com/i5tKN0r4602f">666</a>
-    <p>--------</p>
-    <a href="https://wws.lanzoub.com/i38HB08450le">叼毛大冒险</a>
-    <p>--------</p>
-    <a href="https://wwqi.lanzoub.com/igawp0zrgtcf">粽子矿工</a>
+    <a href="game.html">Go!</a>
     <h1 style = "background:red;">拜访作者：</h1>
     <a href="https://space.bilibili.com/1660860592">GO！</a>
     <a href="1.html">Test！</a>
