@@ -9,6 +9,7 @@
     <a href="https://www.bilibili.com/video/BV1uT4y1P7CX/">点击此处</a>
     <h1 style = "background:blue;">其他分支：</h1>
     <a href="1.html">camera</a>
+    <a href="Mondrian.html">Mondrian</a>
     <p style="    text-align: center;
         margin: auto;
         padding: 20px;
