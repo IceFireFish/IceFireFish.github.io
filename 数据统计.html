@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>数据统计工具</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* 样式部分保持与之前相同 */
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f0f4f7;
+        }
+        .input-section {
+            margin-bottom: 25px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        input {
+            padding: 10px;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            flex-grow: 1;
+            max-width: 300px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+        .data-list {
+            background: white;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            max-height: 250px;
+            overflow-y: auto;
+            min-height: 60px;
+        }
+        .data-item {
+            display: inline-flex;
+            align-items: center;
+            margin: 5px;
+            padding: 8px 15px;
+            background: #e8f5e9;
+            border-radius: 20px;
+            animation: fadeIn 0.3s;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+        .data-item:hover {
+            background: #c8e6c9;
+            transform: scale(1.05);
+        }
+        .data-item::after {
+            content: "双击删除";
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff4444;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .data-item:hover::after {
+            opacity: 1;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        #chartContainer {
+            margin-top: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        .empty-tip {
+            color: #888;
+            text-align: center;
+            padding: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="input-section">
+        <input type="number" id="dataInput" placeholder="输入数字（支持小数）" step="any">
+        <button onclick="addData()">添加数据</button>
+        <button onclick="resetData()">重置数据</button>
+    </div>
+
+    <div class="data-list" id="dataList">
+        <div class="empty-tip">暂无数据，请添加数据</div>
+    </div>
+
+    <div class="stats-grid" id="statsDisplay"></div>
+    <canvas id="chartContainer"></canvas>
+
+    <script>
+        let data = [];
+        let myChart = null;
+
+        function addData() {
+            const input = document.getElementById('dataInput');
+            const value = parseFloat(input.value);
+            
+            if (!isNaN(value)) {
+                data.push(value);
+                input.value = '';
+                input.focus();
+                updateDisplay();
+                updateDataList();
+            }
+        }
+
+        function resetData() {
+            data = [];
+            updateDisplay();
+            updateDataList();
+        }
+
+        function updateDataList() {
+            const container = document.getElementById('dataList');
+            // 修复显示逻辑：当没有数据时显示提示信息
+            if (data.length === 0) {
+                container.innerHTML = '<div class="empty-tip">暂无数据，请添加数据</div>';
+            } else {
+                container.innerHTML = data.map((num, index) => `
+                    <div class="data-item" title="双击删除此项">
+                        <span>#${index + 1}: ${num}</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // 保持原有的统计计算函数
+        function calculateStats() {
+            if (data.length === 0) return null;
+
+            const sorted = [...data].sort((a, b) => a - b);
+            const sum = data.reduce((a, b) => a + b, 0);
+            const mean = sum / data.length;
+            
+            const variance = data.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / data.length;
+            
+            const mid = Math.floor(sorted.length / 2);
+            const median = sorted.length % 2 !== 0 
+                ? sorted[mid] 
+                : (sorted[mid - 1] + sorted[mid]) / 2;
+            
+            const frequency = {};
+            let maxFreq = 0;
+            let modes = [];
+            
+            sorted.forEach(num => {
+                frequency[num] = (frequency[num] || 0) + 1;
+                if (frequency[num] > maxFreq) {
+                    maxFreq = frequency[num];
+                    modes = [num];
+                } else if (frequency[num] === maxFreq) {
+                    if (!modes.includes(num)) modes.push(num);
+                }
+            });
+
+            return {
+                count: data.length,
+                sum: sum.toFixed(2),
+                mean: mean.toFixed(2),
+                median: median.toFixed(2),
+                mode: modes.length === data.length ? '无' : modes.map(n => n.toFixed(2)).join(', '),
+                variance: variance.toFixed(2),
+                stdDev: Math.sqrt(variance).toFixed(2)
+            };
+        }
+
+        function updateDisplay() {
+            const stats = calculateStats();
+            const statsDisplay = document.getElementById('statsDisplay');
+            
+            if (!stats) {
+                statsDisplay.innerHTML = '<div class="stat-card">暂无数据</div>';
+                if (myChart) myChart.destroy();
+                return;
+            }
+
+            statsDisplay.innerHTML = `
+                <div class="stat-card">
+                    <h3>数据个数</h3>
+                    <p>${stats.count}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>总和</h3>
+                    <p>${stats.sum}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>平均数</h3>
+                    <p>${stats.mean}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>中位数</h3>
+                    <p>${stats.median}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>众数</h3>
+                    <p>${stats.mode}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>方差</h3>
+                    <p>${stats.variance}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>标准差</h3>
+                    <p>${stats.stdDev}</p>
+                </div>
+            `;
+
+            updateChart();
+        }
+
+        function updateChart() {
+            const ctx = document.getElementById('chartContainer').getContext('2d');
+            
+            if (myChart) {
+                myChart.destroy();
+            }
+
+            myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.map((_, i) => `第 ${i + 1} 项`),
+                    datasets: [{
+                        label: '数据值',
+                        data: data,
+                        borderColor: '#4CAF50',
+                        backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                        tension: 0.2,
+                        fill: true,
+                        pointRadius: 5,
+                        pointHoverRadius: 7
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0,0,0,0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    }
+                }
+            });
+        }
+
+        // 添加双击删除功能
+        document.getElementById('dataList').addEventListener('dblclick', (e) => {
+            const item = e.target.closest('.data-item');
+            if (item) {
+                const index = [...document.querySelectorAll('.data-item')].indexOf(item);
+                data.splice(index, 1);
+                updateDisplay();
+                updateDataList();
+            }
+        });
+
+        // 添加回车键支持
+        document.getElementById('dataInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addData();
+        });
+    </script>
+</body>
+</html>
