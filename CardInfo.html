@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>卡牌管理系统</title>
+    <style>
+        :root {
+            --white: #ffffff;
+            --blue: #4a90e2;
+            --purple: #9013fe;
+            --green: #7ed321;
+            --orange: #ff5722;
+            --red: #ff4444;
+            --gray: #9e9e9e;
+            --dark-purple: #673ab7;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            max-width: 1400px;  /* 增加最大宽度 */
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 320px 1fr;  /* 调整比例 */
+            gap: 30px;
+            width: 100%;
+        }
+
+        .card-form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 20px;  /* 固定表单位置 */
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background: var(--blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .card-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(560px, 1fr));  /* 调整卡片最小宽度 */
+            gap: 25px;
+            width: 100%;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid transparent;
+            min-height: 200px;
+        }
+
+        .card[data-type="攻击"] { border-left-color: var(--red); }
+        .card[data-type="技能"] { border-left-color: var(--blue); }
+        .card[data-type="能力"] { border-left-color: var(--green); }
+        .card[data-type="状态"] { border-left-color: var(--gray); }
+        .card[data-type="诅咒"] { border-left-color: var(--dark-purple); }
+
+        .card-quality {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .card-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin: 40px 0 15px;  /* 增加上边距 */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .card-cost {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #333;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-size: 1.1em;
+        }
+
+        .card-type {
+            font-size: 0.85em;
+            padding: 3px 12px;
+            border-radius: 15px;
+            background: rgba(0,0,0,0.08);
+            color: #666;
+        }
+
+        .upgrade-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: absolute;
+            top: 60px;
+            right: 15px;
+        }
+
+        .quality-white { background-color: var(--white); border: 1px solid #ddd; }
+        .quality-blue { background-color: var(--blue); }
+        .quality-purple { background-color: var(--purple); }
+        .quality-green { background-color: var(--green); }
+
+        .card-actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .cost-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .x-cost-checkbox {
+            display: flex;
+            align-items: center;
+        }
+
+        .x-cost-checkbox label {
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .card-form {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card-form">
+            <h2>新建卡牌</h2>
+            <div class="form-group">
+                <label>卡牌名称</label>
+                <input type="text" id="cardName">
+            </div>
+            <div class="form-group">
+                <label>卡牌类别</label>
+                <select id="cardType">
+                    <option value="攻击">攻击</option>
+                    <option value="技能">技能</option>
+                    <option value="能力">能力</option>
+                    <option value="状态">状态</option>
+                    <option value="诅咒">诅咒</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>卡牌费用</label>
+                <div class="cost-container">
+                    <input type="number" id="cardCost" min="0" style="width: 80px;">
+                    <div class="x-cost-checkbox">
+                        <input type="checkbox" id="xCostCheckbox" onchange="toggleXCost()">
+                        <label for="xCostCheckbox">X费</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>升级后费用</label>
+                <div class="cost-container">
+                    <input type="number" id="upgradedCardCost" min="0" style="width: 80px;">
+                    <div class="x-cost-checkbox">
+                        <input type="checkbox" id="upgradedXCostCheckbox" onchange="toggleUpgradedXCost()">
+                        <label for="upgradedXCostCheckbox">X费</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>卡牌品质</label>
+                <select id="cardQuality">
+                    <option value="white">普通-白色</option>
+                    <option value="blue">罕见-蓝色</option>
+                    <option value="purple">稀有-紫色</option>
+                    <option value="green">事件-绿色</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>卡牌介绍</label>
+                <textarea id="cardDesc" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <label>升级后介绍</label>
+                <textarea id="upgradedCardDesc" rows="4"></textarea>
+            </div>
+            <button onclick="addCard()">添加卡牌</button>
+            <button onclick="exportData()" style="background: var(--green); margin-left: 10px;">导出数据</button>
+            <!-- 表单内容保持不变 -->
+        </div>
+
+        <div class="card-list" id="cardList"></div>
+    </div>
+
+    <script>
+        // JavaScript部分保持不变
+        let cards = JSON.parse(localStorage.getItem('cards')) || [];
+
+        function toggleXCost() {
+            const costInput = document.getElementById('cardCost');
+            const xCheckbox = document.getElementById('xCostCheckbox');
+            
+            if(xCheckbox.checked) {
+                costInput.value = 'X';
+                costInput.disabled = true;
+                costInput.type = 'text';
+            } else {
+                costInput.disabled = false;
+                costInput.type = 'number';
+                costInput.value = '';
+            }
+        }
+
+        function toggleUpgradedXCost() {
+            const costInput = document.getElementById('upgradedCardCost');
+            const xCheckbox = document.getElementById('upgradedXCostCheckbox');
+            
+            if(xCheckbox.checked) {
+                costInput.value = 'X';
+                costInput.disabled = true;
+                costInput.type = 'text';
+            } else {
+                costInput.disabled = false;
+                costInput.type = 'number';
+                costInput.value = '';
+            }
+        }
+
+        function addCard() {
+            const card = {
+                name: document.getElementById('cardName').value,
+                type: document.getElementById('cardType').value,
+                cost: getCostValue('cardCost', 'xCostCheckbox'),
+                upgradedCost: getCostValue('upgradedCardCost', 'upgradedXCostCheckbox'),
+                quality: document.getElementById('cardQuality').value,
+                desc: document.getElementById('cardDesc').value,
+                upgradedDesc: document.getElementById('upgradedCardDesc').value,
+                isXCost: document.getElementById('xCostCheckbox').checked,
+                isUpgradedXCost: document.getElementById('upgradedXCostCheckbox').checked
+            };
+
+            cards.push(card);
+            saveAndRefresh();
+            clearForm();
+        }
+
+        function getCostValue(costId, checkboxId) {
+            const checkbox = document.getElementById(checkboxId);
+            return checkbox.checked ? 'X' : document.getElementById(costId).value;
+        }
+
+        function clearForm() {
+            document.getElementById('cardName').value = '';
+            document.getElementById('cardType').value = '攻击';
+            document.getElementById('cardCost').value = '';
+            document.getElementById('upgradedCardCost').value = '';
+            document.getElementById('xCostCheckbox').checked = false;
+            document.getElementById('upgradedXCostCheckbox').checked = false;
+            document.getElementById('cardQuality').value = 'white';
+            document.getElementById('cardDesc').value = '';
+            document.getElementById('upgradedCardDesc').value = '';
+            toggleXCost();
+            toggleUpgradedXCost();
+        }
+
+        function renderCards() {
+            const list = document.getElementById('cardList');
+            list.innerHTML = cards.map((card, index) => {
+                const isUpgraded = card.showUpgraded || false;
+                return `
+                <div class="card" data-type="${card.type}">
+                    <div class="card-cost" style="${isUpgraded ? (card.isUpgradedXCost ? 'background:var(--orange);' : '') : (card.isXCost ? 'background:var(--orange);' : '')}">
+                        ${isUpgraded ? card.upgradedCost : card.cost}
+                    </div>
+                    <div class="card-quality ${'quality-' + card.quality}"></div>
+                    <div class="card-name">
+                        ${card.name}${isUpgraded ? '<span style="color:var(--orange)">+</span>' : ''}
+                        <div class="card-type">${card.type}</div>
+                    </div>
+                    <div class="upgrade-toggle">
+                        <input type="checkbox" 
+                               ${isUpgraded ? 'checked' : ''} 
+                               onchange="toggleUpgrade(${index}, this.checked)">
+                        <label>升级版本</label>
+                    </div>
+                    <div class="card-desc">
+                        ${isUpgraded ? card.upgradedDesc : card.desc}
+                    </div>
+                    <div class="card-actions">
+                        <button onclick="editCard(${index})" style="background: var(--purple);">编辑</button>
+                        <button onclick="deleteCard(${index})" style="background: #ff4444;">删除</button>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function toggleUpgrade(index, checked) {
+            cards[index].showUpgraded = checked;
+            saveAndRefresh();
+        }
+
+        function editCard(index) {
+            const card = cards[index];
+            
+            document.getElementById('cardName').value = card.name;
+            document.getElementById('cardType').value = card.type;
+            document.getElementById('cardQuality').value = card.quality;
+            document.getElementById('cardDesc').value = card.desc;
+            document.getElementById('upgradedCardDesc').value = card.upgradedDesc;
+
+            document.getElementById('xCostCheckbox').checked = card.isXCost;
+            if(!card.isXCost) document.getElementById('cardCost').value = card.cost;
+            
+            document.getElementById('upgradedXCostCheckbox').checked = card.isUpgradedXCost;
+            if(!card.isUpgradedXCost) document.getElementById('upgradedCardCost').value = card.upgradedCost;
+
+            toggleXCost();
+            toggleUpgradedXCost();
+            
+            cards.splice(index, 1);
+            saveAndRefresh();
+        }
+
+        function deleteCard(index) {
+            if(confirm('确定要删除这张卡牌吗？')) {
+                cards.splice(index, 1);
+                saveAndRefresh();
+            }
+        }
+
+        function saveAndRefresh() {
+            localStorage.setItem('cards', JSON.stringify(cards));
+            renderCards();
+        }
+
+        function exportData() {
+            const dataStr = JSON.stringify(cards.map(card => {
+                const {showUpgraded, ...rest} = card;
+                return rest;
+            }), null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'cards-data.json';
+            a.click();
+        }
+
+        renderCards();
+        toggleXCost();
+        toggleUpgradedXCost();
+    </script>
+</body>
+</html>
