@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>植物遗物管理器</title>
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #607D8B;
+            --danger-color: #f44336;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            padding: 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+            background: #f5f5f5;
+        }
+
+        .form-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            align-items: start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            font-weight: 500;
+            color: #616161;
+            padding-top: 8px;
+        }
+
+        input, select, textarea {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            transition: all 0.2s;
+        }
+
+        #characters {
+            height: 120px;
+            padding: 8px;
+        }
+
+        #characters option {
+            padding: 8px;
+            border-radius: 6px;
+            margin: 2px 0;
+        }
+
+        #characters option:hover {
+            background: #f5f5f5;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        #imagePreview {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            border: 2px dashed #bdbdbd;
+            border-radius: 8px;
+            padding: 8px;
+            background: #fafafa;
+        }
+
+        .relic-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .relic-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+            position: relative;
+        }
+
+        .relic-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .relic-image {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .primary-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .primary-btn:hover {
+            background: #45a049;
+        }
+
+        .secondary-btn {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .secondary-btn:hover {
+            background: #546e7a;
+        }
+
+        .danger-btn {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .danger-btn:hover {
+            background: #d32f2f;
+        }
+
+        .role-tag {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin: 4px 2px;
+            display: inline-block;
+        }
+
+        .rarity-tag {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .普通 { background: #9e9e9e; color: white; }
+        .罕见 { background: #2196f3; color: white; }
+        .稀有 { background: #9c27b0; color: white; }
+        .boss { background: #f44336; color: white; }
+        .商店 { background: #4caf50; color: white; }
+
+        .no-role {
+            color: #757575;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-section">
+        <h2 style="margin-top: 0; color: #2E7D32">🌿 遗物编辑器</h2>
+        <div class="form-row">
+            <label>名称：</label>
+            <input type="text" id="name" placeholder="输入遗物名称" required>
+        </div>
+        <div class="form-row">
+            <label>介绍：</label>
+            <textarea id="description" rows="3" placeholder="输入遗物描述" required></textarea>
+        </div>
+        <div class="form-row">
+            <label>稀有度：</label>
+            <select id="rarity">
+                <option value="普通">普通</option>
+                <option value="罕见">罕见</option>
+                <option value="稀有">稀有</option>
+                <option value="boss">Boss</option>
+                <option value="商店">商店</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label>专属角色：</label>
+            <select id="characters" multiple>
+                <option value="无特殊角色">无专属角色</option>
+                <option value="豌豆射手">豌豆射手</option>
+                <option value="大嘴花">大嘴花</option>
+                <option value="向日葵">向日葵</option>
+                <option value="仙人掌">仙人掌</option>
+                
+            </select>
+        </div>
+        <div class="form-row">
+            <label>图片：</label>
+            <div>
+                <input type="file" id="imageInput" accept="image/*">
+                <img id="imagePreview">
+            </div>
+        </div>
+        <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+            <button class="primary-btn" onclick="saveRelic()">💾 保存遗物</button>
+            <button class="secondary-btn" onclick="clearForm()">🗑️ 清除表单</button>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <div style="display: flex; justify-content: space-between; align-items: center">
+            <h2 style="margin: 0; color: #2E7D32">🗃️ 遗物列表</h2>
+            <div style="display: flex; gap: 1rem;">
+                <button class="secondary-btn" onclick="exportData()">📤 导出数据</button>
+                <button class="secondary-btn" onclick="importData()">📥 导入数据</button>
+            </div>
+        </div>
+        <div id="relicList" class="relic-list"></div>
+    </div>
+
+    <script>
+        let relics = [];
+        let editingId = null;
+
+        // 自动保存功能
+        function autoSave() {
+            localStorage.setItem('relicsData', JSON.stringify(relics));
+        }
+
+        // 加载数据
+        function loadData() {
+            const savedData = localStorage.getItem('relicsData');
+            if (savedData) {
+                relics = JSON.parse(savedData);
+                updateRelicList();
+            }
+        }
+
+        function saveRelic() {
+            const nameInput = document.getElementById('name');
+            const descInput = document.getElementById('description');
+            
+            if (!nameInput.value.trim() || !descInput.value.trim()) {
+                alert('请填写名称和介绍');
+                return;
+            }
+
+            const relic = {
+                id: editingId || Date.now(),
+                name: nameInput.value,
+                description: descInput.value,
+                rarity: document.getElementById('rarity').value,
+                characters: Array.from(document.getElementById('characters').selectedOptions)
+                    .map(option => option.value),
+                image: document.getElementById('imagePreview').src || ''
+            };
+
+            const index = relics.findIndex(r => r.id === relic.id);
+            if (index > -1) {
+                relics[index] = relic;
+            } else {
+                relics.push(relic);
+            }
+
+            clearForm();
+            updateRelicList();
+            autoSave();
+        }
+
+        function editRelic(id) {
+            const relic = relics.find(r => r.id === id);
+            if (!relic) return;
+
+            editingId = id;
+            document.getElementById('name').value = relic.name;
+            document.getElementById('description').value = relic.description;
+            document.getElementById('rarity').value = relic.rarity;
+            
+            const characterSelect = document.getElementById('characters');
+            Array.from(characterSelect.options).forEach(option => {
+                option.selected = relic.characters.includes(option.value);
+            });
+            
+            document.getElementById('imagePreview').src = relic.image;
+        }
+
+        function deleteRelic(id) {
+            if (confirm('确定要删除这个遗物吗？')) {
+                relics = relics.filter(r => r.id !== id);
+                updateRelicList();
+                autoSave();
+            }
+        }
+
+        function updateRelicList() {
+            const container = document.getElementById('relicList');
+            container.innerHTML = relics.map(relic => `
+                <div class="relic-card">
+                    ${relic.image ? `<img src="${relic.image}" class="relic-image">` : ''}
+                    <div class="rarity-tag ${relic.rarity}">${relic.rarity}</div>
+                    <h3 style="margin: 0 0 8px">${relic.name}</h3>
+                    <p style="color: #616161; margin: 0 0 12px">${relic.description}</p>
+                    <div style="font-size: 0.9em">
+                        ${relic.characters.length > 0 ? 
+                            relic.characters.map(c => `<span class="role-tag">${c}</span>`).join('') : 
+                            '<span class="no-role">无专属角色</span>'}
+                    </div>
+                    <div style="margin-top: 1rem; display: flex; gap: 8px;">
+                        <button class="primary-btn" onclick="editRelic(${relic.id})">✏️ 编辑</button>
+                        <button class="danger-btn" onclick="deleteRelic(${relic.id})">🗑️ 删除</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function clearForm() {
+            editingId = null;
+            document.getElementById('name').value = '';
+            document.getElementById('description').value = '';
+            document.getElementById('rarity').value = '普通';
+            document.getElementById('characters').selectedIndex = -1;
+            document.getElementById('imagePreview').src = '';
+            document.getElementById('imageInput').value = '';
+        }
+
+        // 图片处理
+        document.getElementById('imageInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    document.getElementById('imagePreview').src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 导出导入功能
+        function exportData() {
+            const dataStr = JSON.stringify(relics);
+            const blob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `relics_${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
+        }
+
+        function importData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'application/json';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    try {
+                        const importedData = JSON.parse(event.target.result);
+                        relics = importedData;
+                        updateRelicList();
+                        autoSave();
+                        alert('导入成功！');
+                    } catch (error) {
+                        alert('文件格式错误，导入失败');
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        // 初始化加载
+        loadData();
+
+        // 自动保存监听
+        window.addEventListener('beforeunload', autoSave);
+    </script>
+</body>
+</html>
