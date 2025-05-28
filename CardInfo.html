@@ -13,79 +13,134 @@
             --red: #ff4444;
             --gray: #9e9e9e;
             --dark-purple: #673ab7;
+            --dark-blue: #2c3e50;
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            max-width: 1400px;  /* 增加最大宽度 */
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
-            background: #f5f5f5;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(to right, var(--dark-blue), var(--dark-purple));
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        header h1 i {
+            font-size: 2rem;
         }
 
         .container {
             display: grid;
-            grid-template-columns: 320px 1fr;  /* 调整比例 */
+            grid-template-columns: 350px 1fr;
             gap: 30px;
             width: 100%;
         }
 
         .card-form {
             background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
             height: fit-content;
             position: sticky;
-            top: 20px;  /* 固定表单位置 */
+            top: 20px;
+            transition: all 0.3s ease;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
         }
 
         label {
             display: block;
-            margin-bottom: 5px;
-            color: #666;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
         }
 
         input, select, textarea {
             width: 100%;
-            padding: 8px;
+            padding: 12px;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+            outline: none;
         }
 
         button {
             background: var(--blue);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 12px 24px;
+            border-radius: 6px;
             cursor: pointer;
-            transition: opacity 0.3s;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         button:hover {
-            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
         .card-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(560px, 1fr));  /* 调整卡片最小宽度 */
+            grid-template-columns: repeat(auto-fill, minmax(580px, 1fr));
             gap: 25px;
             width: 100%;
         }
 
         .card {
             background: white;
-            border-radius: 10px;
-            padding: 20px;
+            border-radius: 12px;
+            padding: 25px;
             position: relative;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            border-left: 4px solid transparent;
-            min-height: 200px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid transparent;
+            min-height: 240px;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
         }
 
         .card[data-type="攻击"] { border-left-color: var(--red); }
@@ -96,43 +151,57 @@
 
         .card-quality {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 20px;
-            height: 20px;
+            top: 20px;
+            right: 20px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .card-name {
-            font-size: 1.3em;
+            font-size: 1.5rem;
             font-weight: bold;
-            margin: 40px 0 15px;  /* 增加上边距 */
+            margin: 45px 0 18px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             flex-wrap: wrap;
         }
 
         .card-cost {
             position: absolute;
-            top: 15px;
-            left: 15px;
+            top: 20px;
+            left: 20px;
             background: #333;
             color: white;
-            width: 35px;
-            height: 35px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             text-align: center;
-            line-height: 35px;
-            font-size: 1.1em;
+            line-height: 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .no-cost {
+            background: var(--gray) !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            padding: 5px;
+            box-sizing: border-box;
         }
 
         .card-type {
-            font-size: 0.85em;
-            padding: 3px 12px;
-            border-radius: 15px;
+            font-size: 0.9rem;
+            padding: 5px 15px;
+            border-radius: 20px;
             background: rgba(0,0,0,0.08);
-            color: #666;
+            color: #555;
+            font-weight: 500;
         }
 
         .upgrade-toggle {
@@ -140,8 +209,8 @@
             align-items: center;
             gap: 8px;
             position: absolute;
-            top: 60px;
-            right: 15px;
+            top: 70px;
+            right: 20px;
         }
 
         .quality-white { background-color: var(--white); border: 1px solid #ddd; }
@@ -151,7 +220,7 @@
         .quality-nocolor { background-color: var(--gray); }
 
         .card-actions {
-            margin-top: 20px;
+            margin-top: 25px;
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
@@ -166,11 +235,64 @@
         .x-cost-checkbox {
             display: flex;
             align-items: center;
+            gap: 6px;
         }
 
         .x-cost-checkbox label {
             margin: 0;
             white-space: nowrap;
+        }
+        
+        .unplayable-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 6px;
+        }
+        
+        .cost-fields {
+            transition: all 0.3s ease;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .disabled-cost-fields {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        
+        .form-section-title {
+            font-weight: bold;
+            margin: 25px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #eee;
+            color: var(--dark-purple);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-footer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+        
+        .no-cost-indicator {
+            display: inline-block;
+            background: var(--gray);
+            color: white;
+            font-size: 0.8rem;
+            padding: 3px 10px;
+            border-radius: 4px;
+            margin-left: 5px;
         }
 
         input[type="number"]::-webkit-inner-spin-button,
@@ -178,26 +300,202 @@
             -webkit-appearance: none;
             margin: 0;
         }
+        
+        .card.unplayable {
+            background: repeating-linear-gradient(
+                45deg,
+                #f9f9f9,
+                #f9f9f9 10px,
+                #f0f0f0 10px,
+                #f0f0f0 20px
+            );
+            border-left: 5px solid #888;
+        }
+        
+        .unplayable-badge {
+            background: var(--gray);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-left: 10px;
+            font-weight: 500;
+        }
+        
+        .card-desc {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #444;
+            min-height: 80px;
+            padding: 5px;
+            border-radius: 5px;
+            background: rgba(0,0,0,0.02);
+        }
+        
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .stats-item {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .stats-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--dark-purple);
+            margin-top: 5px;
+        }
+        
+        .btn-export {
+            background: var(--green);
+        }
+        
+        .btn-import {
+            background: var(--purple);
+        }
+        
+        .btn-clear {
+            background: var(--gray);
+        }
+        
+        .btn-delete-all {
+            background: var(--red);
+        }
+        
+        .import-container {
+            position: relative;
+            margin-top: 15px;
+        }
+        
+        #fileInput {
+            position: absolute;
+            left: -9999px;
+        }
+        
+        .card-count {
+            position: absolute;
+            top: 20px;
+            right: 60px;
+            background: var(--orange);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            color: #777;
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .empty-state h3 {
+            color: #555;
+            margin-bottom: 15px;
+        }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1200px) {
             .container {
                 grid-template-columns: 1fr;
-                gap: 20px;
             }
             
             .card-form {
                 position: static;
             }
+            
+            .card-list {
+                grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .card-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-bar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* 图标样式 */
+        .icon {
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            stroke-width: 0;
+            stroke: currentColor;
+            fill: currentColor;
         }
     </style>
 </head>
 <body>
+    <header>
+        <h1>
+
+            卡牌信息管理
+        </h1>
+    </header>
+    
+    <div class="stats-bar">
+        <div class="stats-item">
+            <div>总卡牌数</div>
+            <div class="stats-value" id="totalCards">0</div>
+        </div>
+        <div class="stats-item">
+            <div>攻击卡牌</div>
+            <div class="stats-value" id="attackCards">0</div>
+        </div>
+        <div class="stats-item">
+            <div>技能卡牌</div>
+            <div class="stats-value" id="skillCards">0</div>
+        </div>
+        <div class="stats-item">
+            <div>稀有卡牌</div>
+            <div class="stats-value" id="rareCards">0</div>
+        </div>
+    </div>
+    
     <div class="container">
         <div class="card-form">
-            <h2>新建卡牌</h2>
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
+                </svg>
+                新建卡牌
+            </h2>
             <div class="form-group">
                 <label>卡牌名称</label>
-                <input type="text" id="cardName">
+                <input type="text" id="cardName" placeholder="输入卡牌名称">
             </div>
             <div class="form-group">
                 <label>卡牌类别</label>
@@ -209,25 +507,48 @@
                     <option value="诅咒">诅咒</option>
                 </select>
             </div>
+            
+            <div class="form-section-title">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M3,3V21H21V3H3M12,18C10,18 7.2,16.8 6,15C6.3,13.35 10,12.5 12,12.5C14,12.5 17.7,13.35 18,15C16.8,16.8 14,18 12,18M9,10C8.45,10 8,9.55 8,9C8,8.45 8.45,8 9,8C9.55,8 10,8.45 10,9C10,9.55 9.55,10 9,10M15,10C14.45,10 14,9.55 14,9C14,8.45 14.45,8 15,8C15.55,8 16,8.45 16,9C16,9.55 15.55,10 15,10M12,5C14.13,5 16,5.94 17,7.35C16.94,8.74 15.83,10.5 12,10.5C8.17,10.5 7.06,8.74 7,7.35C8,5.94 9.87,5 12,5Z" />
+                </svg>
+                费用设置
+            </div>
             <div class="form-group">
-                <label>卡牌费用</label>
-                <div class="cost-container">
-                    <input type="number" id="cardCost" min="0" style="width: 80px;">
-                    <div class="x-cost-checkbox">
-                        <input type="checkbox" id="xCostCheckbox" onchange="toggleXCost()">
-                        <label for="xCostCheckbox">X费</label>
+                <div class="unplayable-container">
+                    <input type="checkbox" id="unplayableCheckbox" onchange="toggleUnplayable()">
+                    <label for="unplayableCheckbox">不可打出</label>
+                </div>
+            </div>
+            
+            <div class="cost-fields" id="costFields">
+                <div class="form-group">
+                    <label>卡牌费用</label>
+                    <div class="cost-container">
+                        <input type="number" id="cardCost" min="0" style="width: 100px;" placeholder="0">
+                        <div class="x-cost-checkbox">
+                            <input type="checkbox" id="xCostCheckbox" onchange="toggleXCost()">
+                            <label for="xCostCheckbox">X费</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>升级后费用</label>
+                    <div class="cost-container">
+                        <input type="number" id="upgradedCardCost" min="0" style="width: 100px;" placeholder="0">
+                        <div class="x-cost-checkbox">
+                            <input type="checkbox" id="upgradedXCostCheckbox" onchange="toggleUpgradedXCost()">
+                            <label for="upgradedXCostCheckbox">X费</label>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label>升级后费用</label>
-                <div class="cost-container">
-                    <input type="number" id="upgradedCardCost" min="0" style="width: 80px;">
-                    <div class="x-cost-checkbox">
-                        <input type="checkbox" id="upgradedXCostCheckbox" onchange="toggleUpgradedXCost()">
-                        <label for="upgradedXCostCheckbox">X费</label>
-                    </div>
-                </div>
+            
+            <div class="form-section-title">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M14.25,21H17V19H14.25L16.37,5H19V3H5V5H7.13L4.86,21H3V23H12V21H10.71L7.17,5H16.83L14.25,21Z" />
+                </svg>
+                卡牌属性
             </div>
             <div class="form-group">
                 <label>卡牌品质</label>
@@ -239,25 +560,136 @@
                     <option value="nocolor">附属-无色</option>
                 </select>
             </div>
+            
+            <div class="form-section-title">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M15,13H16.5V15.82L18.94,17.23L18.19,18.53L15,16.69V13M19,8H5V19H9.67C9.24,18.09 9,17.07 9,16A7,7 0 0,1 16,9C17.07,9 18.09,9.24 19,9.67V8M5,21C3.89,21 3,20.1 3,19V5C3,3.89 3.89,3 5,3H19A2,2 0 0,1 21,5V11.1C22.24,12.36 23,14.09 23,16A7,7 0 0,1 16,23C14.09,23 12.36,22.24 11.1,21H5M16,11A5,5 0 0,0 11,16A5,5 0 0,0 16,21A5,5 0 0,0 21,16A5,5 0 0,0 16,11Z" />
+                </svg>
+                卡牌效果
+            </div>
             <div class="form-group">
                 <label>卡牌介绍</label>
-                <textarea id="cardDesc" rows="4"></textarea>
+                <textarea id="cardDesc" rows="4" placeholder="输入卡牌效果描述"></textarea>
             </div>
             <div class="form-group">
                 <label>升级后介绍</label>
-                <textarea id="upgradedCardDesc" rows="4"></textarea>
+                <textarea id="upgradedCardDesc" rows="4" placeholder="输入升级后的效果描述"></textarea>
             </div>
-            <button onclick="addCard()">添加卡牌</button>
-            <button onclick="exportData()" style="background: var(--green); margin-left: 10px;">导出数据</button>
-            <!-- 表单内容保持不变 -->
+            
+            <div class="form-footer">
+                <button onclick="addCard()">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M17,14H19V17H22V19H19V22H17V19H14V17H17V14M12,3C16.42,3 20,4.79 20,7C20,9.21 16.42,11 12,11C7.58,11 4,9.21 4,7C4,4.79 7.58,3 12,3M4,9C4,11.21 7.58,13 12,13C16.42,13 20,11.21 20,9V12.08L19,12C16.41,12 14.2,13.64 13.36,15.94L12,16C7.58,16 4,14.21 4,12V9M4,14C4,16.21 7.58,18 12,18H13C13,19.05 13.27,20.04 13.75,20.9L12,21C7.58,21 4,19.21 4,17V14Z" />
+                    </svg>
+                    添加卡牌
+                </button>
+                <button class="btn-export" onclick="exportData()">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" />
+                    </svg>
+                    导出数据
+                </button>
+                <button class="btn-import" onclick="document.getElementById('fileInput').click()">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M9,10V14H15V10H19L12,3L5,10H9M5,18V16H19V18H5Z" />
+                    </svg>
+                    导入数据
+                </button>
+                <button class="btn-clear" onclick="clearForm()">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+                    </svg>
+                    清空表单
+                </button>
+            </div>
+            
+            <div class="import-container">
+                <input type="file" id="fileInput" accept=".json" onchange="importData(event)" style="display: none;">
+            </div>
         </div>
 
-        <div class="card-list" id="cardList"></div>
+        <div class="card-list" id="cardList">
+            <!-- 卡片将通过JavaScript动态生成 -->
+        </div>
     </div>
 
     <script>
-        // JavaScript部分保持不变
         let cards = JSON.parse(localStorage.getItem('cards')) || [];
+        
+        // 初始化示例数据
+        if(cards.length === 0) {
+            cards = [
+                {
+                    name: "攻击",
+                    type: "攻击",
+                    cost: "1",
+                    upgradedCost: "0",
+                    quality: "white",
+                    desc: "造成6点伤害。",
+                    upgradedDesc: "造成9点伤害。",
+                    unplayable: false
+                },
+                {
+                    name: "防御",
+                    type: "技能",
+                    cost: "1",
+                    upgradedCost: "1",
+                    quality: "white",
+                    desc: "获得5点格挡。",
+                    upgradedDesc: "获得8点格挡。",
+                    unplayable: false
+                },
+                {
+                    name: "诅咒：疼痛",
+                    type: "诅咒",
+                    cost: "No",
+                    upgradedCost: "No",
+                    quality: "nocolor",
+                    desc: "每回合结束时，受到2点伤害。无法被移除。",
+                    upgradedDesc: "每回合结束时，受到2点伤害。无法被移除。",
+                    unplayable: true
+                },
+                {
+                    name: "恶魔形态",
+                    type: "能力",
+                    cost: "3",
+                    upgradedCost: "2",
+                    quality: "purple",
+                    desc: "在你的回合开始时，获得2点力量。",
+                    upgradedDesc: "在你的回合开始时，获得3点力量。",
+                    unplayable: false
+                }
+            ];
+            saveAndRefresh();
+        }
+
+        function updateStats() {
+            document.getElementById('totalCards').textContent = cards.length;
+            
+            const attackCards = cards.filter(card => card.type === "攻击").length;
+            const skillCards = cards.filter(card => card.type === "技能").length;
+            const rareCards = cards.filter(card => card.quality === "purple").length;
+            
+            document.getElementById('attackCards').textContent = attackCards;
+            document.getElementById('skillCards').textContent = skillCards;
+            document.getElementById('rareCards').textContent = rareCards;
+        }
+
+        function toggleUnplayable() {
+            const unplayable = document.getElementById('unplayableCheckbox').checked;
+            const costFields = document.getElementById('costFields');
+            
+            if(unplayable) {
+                costFields.classList.add('disabled-cost-fields');
+                // 清空费用字段
+                document.getElementById('cardCost').value = '';
+                document.getElementById('upgradedCardCost').value = '';
+                document.getElementById('xCostCheckbox').checked = false;
+                document.getElementById('upgradedXCostCheckbox').checked = false;
+            } else {
+                costFields.classList.remove('disabled-cost-fields');
+            }
+        }
 
         function toggleXCost() {
             const costInput = document.getElementById('cardCost');
@@ -290,16 +722,25 @@
         }
 
         function addCard() {
+            const unplayable = document.getElementById('unplayableCheckbox').checked;
+            const name = document.getElementById('cardName').value.trim();
+            
+            if(!name) {
+                alert('请输入卡牌名称');
+                return;
+            }
+            
             const card = {
-                name: document.getElementById('cardName').value,
+                name: name,
                 type: document.getElementById('cardType').value,
-                cost: getCostValue('cardCost', 'xCostCheckbox'),
-                upgradedCost: getCostValue('upgradedCardCost', 'upgradedXCostCheckbox'),
+                cost: unplayable ? 'No' : getCostValue('cardCost', 'xCostCheckbox') || '0',
+                upgradedCost: unplayable ? 'No' : getCostValue('upgradedCardCost', 'upgradedXCostCheckbox') || '0',
                 quality: document.getElementById('cardQuality').value,
-                desc: document.getElementById('cardDesc').value,
-                upgradedDesc: document.getElementById('upgradedCardDesc').value,
+                desc: document.getElementById('cardDesc').value || '无效果描述',
+                upgradedDesc: document.getElementById('upgradedCardDesc').value || '无效果描述',
                 isXCost: document.getElementById('xCostCheckbox').checked,
-                isUpgradedXCost: document.getElementById('upgradedXCostCheckbox').checked
+                isUpgradedXCost: document.getElementById('upgradedXCostCheckbox').checked,
+                unplayable: unplayable
             };
 
             cards.push(card);
@@ -309,7 +750,8 @@
 
         function getCostValue(costId, checkboxId) {
             const checkbox = document.getElementById(checkboxId);
-            return checkbox.checked ? 'X' : document.getElementById(costId).value;
+            const input = document.getElementById(costId);
+            return checkbox.checked ? 'X' : (input.value || '0');
         }
 
         function clearForm() {
@@ -319,26 +761,45 @@
             document.getElementById('upgradedCardCost').value = '';
             document.getElementById('xCostCheckbox').checked = false;
             document.getElementById('upgradedXCostCheckbox').checked = false;
+            document.getElementById('unplayableCheckbox').checked = false;
             document.getElementById('cardQuality').value = 'white';
             document.getElementById('cardDesc').value = '';
             document.getElementById('upgradedCardDesc').value = '';
             toggleXCost();
             toggleUpgradedXCost();
+            toggleUnplayable();
         }
 
         function renderCards() {
             const list = document.getElementById('cardList');
+            
+            if(cards.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <svg class="icon" viewBox="0 0 24 24" style="width:80px;height:80px;">
+                            <path d="M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,5V19H5V5H19M13,17V15H15V17H13M11,7H13C14.1,7 15,7.9 15,9V11C15,12.11 14.1,13 13,13H11V15H15V17H11A2,2 0 0,1 9,15V9A2,2 0 0,1 11,7M11,9V11H13V9H11Z" />
+                        </svg>
+                        <h3>暂无卡牌数据</h3>
+                        <p>请使用左侧表单添加新卡牌，或导入卡牌数据</p>
+                    </div>
+                `;
+                updateStats();
+                return;
+            }
+            
             list.innerHTML = cards.map((card, index) => {
                 const isUpgraded = card.showUpgraded || false;
                 return `
-                <div class="card" data-type="${card.type}">
-                    <div class="card-cost" style="${isUpgraded ? (card.isUpgradedXCost ? 'background:var(--orange);' : '') : (card.isXCost ? 'background:var(--orange);' : '')}">
+                <div class="card ${card.unplayable ? 'unplayable' : ''}" data-type="${card.type}">
+                    <div class="card-cost ${card.unplayable ? 'no-cost' : ''}" 
+                         style="${!card.unplayable && (isUpgraded ? (card.isUpgradedXCost ? 'background:var(--orange);' : '') : (card.isXCost ? 'background:var(--orange);' : ''))}">
                         ${isUpgraded ? card.upgradedCost : card.cost}
                     </div>
                     <div class="card-quality ${'quality-' + card.quality}"></div>
                     <div class="card-name">
                         ${card.name}${isUpgraded ? '<span style="color:var(--orange)">+</span>' : ''}
                         <div class="card-type">${card.type}</div>
+                        ${card.unplayable ? '<span class="unplayable-badge">不可打出</span>' : ''}
                     </div>
                     <div class="upgrade-toggle">
                         <input type="checkbox" 
@@ -350,12 +811,24 @@
                         ${isUpgraded ? card.upgradedDesc : card.desc}
                     </div>
                     <div class="card-actions">
-                        <button onclick="editCard(${index})" style="background: var(--purple);">编辑</button>
-                        <button onclick="deleteCard(${index})" style="background: #ff4444;">删除</button>
+                        <button onclick="editCard(${index})" style="background: var(--purple);">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
+                            </svg>
+                            编辑
+                        </button>
+                        <button onclick="deleteCard(${index})" style="background: #ff4444;">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+                            </svg>
+                            删除
+                        </button>
                     </div>
                 </div>
                 `;
             }).join('');
+            
+            updateStats();
         }
 
         function toggleUpgrade(index, checked) {
@@ -371,15 +844,19 @@
             document.getElementById('cardQuality').value = card.quality;
             document.getElementById('cardDesc').value = card.desc;
             document.getElementById('upgradedCardDesc').value = card.upgradedDesc;
+            document.getElementById('unplayableCheckbox').checked = card.unplayable;
 
-            document.getElementById('xCostCheckbox').checked = card.isXCost;
-            if(!card.isXCost) document.getElementById('cardCost').value = card.cost;
-            
-            document.getElementById('upgradedXCostCheckbox').checked = card.isUpgradedXCost;
-            if(!card.isUpgradedXCost) document.getElementById('upgradedCardCost').value = card.upgradedCost;
+            if(!card.unplayable) {
+                document.getElementById('xCostCheckbox').checked = card.isXCost;
+                if(!card.isXCost) document.getElementById('cardCost').value = card.cost;
+                
+                document.getElementById('upgradedXCostCheckbox').checked = card.isUpgradedXCost;
+                if(!card.isUpgradedXCost) document.getElementById('upgradedCardCost').value = card.upgradedCost;
+            }
 
             toggleXCost();
             toggleUpgradedXCost();
+            toggleUnplayable();
             
             cards.splice(index, 1);
             saveAndRefresh();
@@ -388,6 +865,13 @@
         function deleteCard(index) {
             if(confirm('确定要删除这张卡牌吗？')) {
                 cards.splice(index, 1);
+                saveAndRefresh();
+            }
+        }
+
+        function deleteAllCards() {
+            if(confirm('确定要删除所有卡牌吗？此操作不可恢复！')) {
+                cards = [];
                 saveAndRefresh();
             }
         }
@@ -407,12 +891,48 @@
             const a = document.createElement('a');
             a.href = url;
             a.download = 'cards-data.json';
+            document.body.appendChild(a);
             a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('数据导出成功！');
         }
 
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedCards = JSON.parse(e.target.result);
+                    
+                    if(!Array.isArray(importedCards)) {
+                        throw new Error('导入的数据格式不正确');
+                    }
+                    
+                    if(confirm(`导入 ${importedCards.length} 张卡牌，将覆盖当前所有卡牌数据。确定继续吗？`)) {
+                        cards = importedCards;
+                        saveAndRefresh();
+                        alert('数据导入成功！');
+                    }
+                } catch (error) {
+                    alert('导入失败：' + error.message);
+                    console.error(error);
+                }
+            };
+            reader.readAsText(file);
+            
+            // 重置文件输入，允许再次选择相同文件
+            event.target.value = '';
+        }
+
+        // 初始化
         renderCards();
         toggleXCost();
         toggleUpgradedXCost();
+        toggleUnplayable();
     </script>
 </body>
 </html>
